@@ -5,3 +5,37 @@
     margin: 0px;
     font-family: 'Roboto', sans-serif;
 }
+
+body {
+    background-color: whitesmoke;
+}
+
+.header {
+    font-family: 'Pacifico', cursive;
+    font-weight: 300;
+    font-size: 4rem;
+    text-align: center;
+}
+
+.container {
+    margin: 0rem 5rem;
+}
+
+.color-wrapper {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    border-style: solid;
+    background-color: rgb(255, 255, 255);
+    overflow: hidden;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    
+}
+
+#color-picker {
+    width: inherit;
+    height: inherit;
+    border: none;
+    background-color: transparent;
+    transform: scale(2);
+}
