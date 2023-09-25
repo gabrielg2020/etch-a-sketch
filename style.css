@@ -70,3 +70,25 @@ button {
     color: whitesmoke;
 }
 
+.grid-size-output {
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+.grid-size-range {
+    -webkit-appearance: none;
+    border: 1px solid rgb(51, 51, 51);
+    border-radius: 8px;
+    background-color: transparent;
+    height: 8px;
+    width: 100%;
+}
+
+.grid-size-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 100px;
+    background: rgb(51, 51, 51);
+    cursor: pointer;
+}
