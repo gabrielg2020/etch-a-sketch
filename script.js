@@ -1,3 +1,61 @@
+const sketchPadController = {
+    sketchPad: null,
+    gridSize: 16,
+    isDrawing: false,
+    drawingColor: 'black',
+
+    init: function () {
+
+        this.sketchPad = document.querySelector('.sketch-pad');
+        this.createGrid();
+        this.setupEventListeners();
+    },
+
+    createGrid: function() {
+        this.sketchPad.style.gridTemplateColumns = `repeat(${this.gridSize}, 1fr)`;
+        this.sketchPad.style.gridTemplateRows = `repeat(${this.gridSize}, 1fr)`;
+        this.clearGrid()
+    },
+
+    clearGrid: function() {
+        while (this.sketchPad.firstChild) {
+            this.sketchPad.removeChild(this.sketchPad.firstChild);
+        }; 
+    },
+
+    setupEventListeners: function() {
+        this.sketchPad.addEventListener ('mousedown', (e) => {
+            e.preventDefault(); // Stops the browser thinking we are trying to drag the sketchPad
+            this.isDrawing = true;
+        });
+
+        this.sketchPad.addEventListener ('mouseup', () => {
+            this.isDrawing = false;
+        });
+
+        for (let i = 0; i < this.gridSize * this.gridSize; i++) {
+            this.createPixel();
+        };
+    },
+
+    createPixel: function() {
+        const pixel = document.createElement('div');
+        pixel.classList.add('pixel')
+        this.sketchPad.appendChild(pixel);
+
+        pixel.addEventListener('mousemove', () => {
+            console.log(this.isDrawing)
+            if (this.isDrawing) {
+                pixel.style.backgroundColor = this.drawingColor;
+            };
+        });
+
+        pixel.addEventListener('click', () => {
+            pixel.style.backgroundColor = this.drawingColor;
+        });
+    },
+};
+
 // Color Picker
 const colorWrapper = document.querySelector('.color-wrapper');
 const colorPicker = document.querySelector('#color-picker');
@@ -27,44 +85,6 @@ gridSizeRange.addEventListener('input', (e) => {
 });
 
 gridSizeRange.addEventListener('change', (e) => {
-    createGrid(e.target.value);
+    sketchPadController.gridSize = e.target.value;
+    sketchPadController.init();
 });
-
-
-
-function createGrid (gridSize) {
-    const sketchPad = document.querySelector('.sketch-pad');
-    sketchPad.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
-    sketchPad.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
-    
-    while (sketchPad.firstChild) {
-        sketchPad.removeChild(sketchPad.firstChild);
-    };
-
-    let isDrawing = false;
-
-    sketchPad.addEventListener('mousedown', () => {
-        isDrawing = true;
-    });
-
-    sketchPad.addEventListener('mouseup', () => {
-        isDrawing = false;
-    });
-
-
-    for (let i = 0; i < gridSize * gridSize ; i++) {
-        const pixel = document.createElement('div');
-        pixel.classList.add('pixel');
-        sketchPad.appendChild(pixel);
-
-        pixel.addEventListener('mousemove', () => {
-            if (isDrawing) {
-                pixel.style.backgroundColor = 'black';
-            };
-        });
-
-        pixel.addEventListener('click', () => {
-            pixel.style.backgroundColor = 'black';
-        });
-    };
-};
