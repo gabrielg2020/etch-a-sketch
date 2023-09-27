@@ -44,7 +44,6 @@ const sketchPadController = {
         this.sketchPad.appendChild(pixel);
 
         pixel.addEventListener('mousemove', () => {
-            console.log(this.isDrawing)
             if (this.isDrawing) {
                 pixel.style.backgroundColor = this.drawingColor;
             };
@@ -61,6 +60,7 @@ const colorWrapper = document.querySelector('.color-wrapper');
 const colorPicker = document.querySelector('#color-picker');
 colorPicker.addEventListener('input', () => {
     colorWrapper.style.cssText = `border-color: ${colorPicker.value}; background-color: ${colorPicker.value};`;
+    sketchPadController.drawingColor = String(colorPicker.value)
 });
 // Buttons
 const buttons = document.querySelectorAll('button');
@@ -82,6 +82,7 @@ const gridSizeRange = document.querySelector('.grid-size-range');
 const gridSizeOutput = document.querySelector('.grid-size-output');
 gridSizeRange.addEventListener('input', (e) => {
     gridSizeOutput.textContent = `${e.target.value}x${e.target.value}`;
+
 });
 
 gridSizeRange.addEventListener('change', (e) => {
