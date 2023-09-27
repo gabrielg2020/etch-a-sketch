@@ -30,6 +30,8 @@ gridSizeRange.addEventListener('change', (e) => {
     createGrid(e.target.value);
 });
 
+
+
 function createGrid (gridSize) {
     const sketchPad = document.querySelector('.sketch-pad');
     sketchPad.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
@@ -39,9 +41,30 @@ function createGrid (gridSize) {
         sketchPad.removeChild(sketchPad.firstChild);
     };
 
+    let isDrawing = false;
+
+    sketchPad.addEventListener('mousedown', () => {
+        isDrawing = true;
+    });
+
+    sketchPad.addEventListener('mouseup', () => {
+        isDrawing = false;
+    });
+
+
     for (let i = 0; i < gridSize * gridSize ; i++) {
         const pixel = document.createElement('div');
         pixel.classList.add('pixel');
         sketchPad.appendChild(pixel);
+
+        pixel.addEventListener('mousemove', () => {
+            if (isDrawing) {
+                pixel.style.backgroundColor = 'black';
+            };
+        });
+
+        pixel.addEventListener('click', () => {
+            pixel.style.backgroundColor = 'black';
+        });
     };
-};``
+};
