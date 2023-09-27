@@ -25,3 +25,23 @@ const gridSizeOutput = document.querySelector('.grid-size-output');
 gridSizeRange.addEventListener('input', (e) => {
     gridSizeOutput.textContent = `${e.target.value}x${e.target.value}`;
 });
+
+gridSizeRange.addEventListener('change', (e) => {
+    createGrid(e.target.value);
+});
+
+function createGrid (gridSize) {
+    const sketchPad = document.querySelector('.sketch-pad');
+    sketchPad.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
+    sketchPad.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
+    
+    while (sketchPad.firstChild) {
+        sketchPad.removeChild(sketchPad.firstChild);
+    };
+
+    for (let i = 0; i < gridSize * gridSize ; i++) {
+        const pixel = document.createElement('div');
+        pixel.classList.add('pixel');
+        sketchPad.appendChild(pixel);
+    };
+};``
