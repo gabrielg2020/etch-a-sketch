@@ -1,5 +1,3 @@
-// TODO: create the clear
-
 // TODO: create the rainbow mode
 
 // TODO: create the darken mode
@@ -9,9 +7,9 @@ const sketchPadController = {
     gridSize: 16,
     isDrawing: false,
     drawingColor: 'black',
+    colorMode: 'color',
 
     init: function () {
-
         this.sketchPad = document.querySelector('.sketch-pad');
         this.createGrid();
         this.setupEventListeners();
@@ -49,14 +47,30 @@ const sketchPadController = {
         pixel.classList.add('pixel')
         this.sketchPad.appendChild(pixel);
 
+        const colorPixel = function (obj) {
+            if (obj.colorMode === 'color'){
+                pixel.style.backgroundColor = obj.drawingColor;
+            } else if (obj.colorMode === 'rainbow'){
+                const redValue = Math.floor(Math.random() * 256);
+                const greenValue = Math.floor(Math.random() * 256);
+                const blueValue = Math.floor(Math.random() * 256);
+
+                const redHex = redValue.toString(16).padStart(2, '0');
+                const greenHex = greenValue.toString(16).padStart(2, '0');
+                const blueHex = blueValue.toString(16).padStart(2, '0');
+
+                pixel.style.backgroundColor = `#${redHex}${greenHex}${blueHex}`;
+            };
+        };
+
         pixel.addEventListener('mousemove', () => {
             if (this.isDrawing) {
-                pixel.style.backgroundColor = this.drawingColor;
+                colorPixel(this)
             };
         });
 
         pixel.addEventListener('click', () => {
-            pixel.style.backgroundColor = this.drawingColor;
+            colorPixel(this)
         });
     },
 
@@ -86,6 +100,14 @@ buttons.forEach(button => {
             return;
         };
 
+        if (button.textContent === 'Color mode') {
+            sketchPadController.colorMode = 'color';
+        } else if (button.textContent === 'Rainbow mode'){
+            sketchPadController.colorMode = 'rainbow';
+        } else if (button.textContent === 'Darken mode'){
+            sketchPadController.colorMode = 'darken'
+        };
+
         buttons.forEach((btn) => {
             btn.classList.remove('selected');
         });
@@ -98,7 +120,6 @@ const gridSizeRange = document.querySelector('.grid-size-range');
 const gridSizeOutput = document.querySelector('.grid-size-output');
 gridSizeRange.addEventListener('input', (e) => {
     gridSizeOutput.textContent = `${e.target.value}x${e.target.value}`;
-
 });
 
 gridSizeRange.addEventListener('change', (e) => {
