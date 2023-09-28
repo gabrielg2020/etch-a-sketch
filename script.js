@@ -1,3 +1,11 @@
+// TODO: have the color mode button be auto selected
+
+// TODO: create the clear
+
+// TODO: create the rainbow mode
+
+// TODO: create the darken mode
+
 const sketchPadController = {
     sketchPad: null,
     gridSize: 16,
@@ -54,6 +62,8 @@ const sketchPadController = {
         });
     },
 };
+
+Window.onload = sketchPadController.init();
 
 // Color Picker
 const colorWrapper = document.querySelector('.color-wrapper');
