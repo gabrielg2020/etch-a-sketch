@@ -1,5 +1,3 @@
-// TODO: create the darken mode
-
 const sketchPadController = {
     sketchPad: null,
     gridSize: 16,
