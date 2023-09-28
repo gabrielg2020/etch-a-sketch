@@ -1,13 +1,11 @@
-// TODO: create the rainbow mode
-
 // TODO: create the darken mode
 
 const sketchPadController = {
     sketchPad: null,
     gridSize: 16,
     isDrawing: false,
-    drawingColor: 'black',
-    colorMode: 'color',
+    drawingColor: 'rgb(0, 0, 0)',
+    colorMode: 'color', 
 
     init: function () {
         this.sketchPad = document.querySelector('.sketch-pad');
@@ -51,15 +49,23 @@ const sketchPadController = {
             if (obj.colorMode === 'color'){
                 pixel.style.backgroundColor = obj.drawingColor;
             } else if (obj.colorMode === 'rainbow'){
-                const redValue = Math.floor(Math.random() * 256);
-                const greenValue = Math.floor(Math.random() * 256);
-                const blueValue = Math.floor(Math.random() * 256);
+                const red = Math.floor(Math.random() * 256);
+                const green = Math.floor(Math.random() * 256);
+                const blue = Math.floor(Math.random() * 256);
 
-                const redHex = redValue.toString(16).padStart(2, '0');
-                const greenHex = greenValue.toString(16).padStart(2, '0');
-                const blueHex = blueValue.toString(16).padStart(2, '0');
+                pixel.style.backgroundColor = `rgb(${red},${green},${blue})`;
+            } else if (obj.colorMode === 'darken'){
+                const color = pixel.style.backgroundColor;
+                if (color === '') {
+                    return;
+                };
 
-                pixel.style.backgroundColor = `#${redHex}${greenHex}${blueHex}`;
+                const components = color.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+                const red = parseInt(components[1]) * 0.9;
+                const green = parseInt(components[2]) * 0.9;
+                const blue = parseInt(components[3]) * 0.9;
+                
+                pixel.style.backgroundColor = `rgb(${red},${green},${blue})`
             };
         };
 
