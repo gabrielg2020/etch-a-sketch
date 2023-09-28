@@ -1,5 +1,3 @@
-// TODO: have the color mode button be auto selected
-
 // TODO: create the clear
 
 // TODO: create the rainbow mode
@@ -22,10 +20,10 @@ const sketchPadController = {
     createGrid: function() {
         this.sketchPad.style.gridTemplateColumns = `repeat(${this.gridSize}, 1fr)`;
         this.sketchPad.style.gridTemplateRows = `repeat(${this.gridSize}, 1fr)`;
-        this.clearGrid()
+        this.removePixels()
     },
 
-    clearGrid: function() {
+    removePixels: function() {
         while (this.sketchPad.firstChild) {
             this.sketchPad.removeChild(this.sketchPad.firstChild);
         }; 
@@ -61,6 +59,13 @@ const sketchPadController = {
             pixel.style.backgroundColor = this.drawingColor;
         });
     },
+
+    clearGrid: function() {
+        const pixels = document.querySelectorAll('.pixel');
+        pixels.forEach(pixel => {
+            pixel.style.backgroundColor = 'white';
+        });
+    },
 };
 
 Window.onload = sketchPadController.init();
@@ -77,6 +82,7 @@ const buttons = document.querySelectorAll('button');
 buttons.forEach(button => {
     button.addEventListener('click', () => {
         if (button.textContent === 'Clear') {
+            sketchPadController.clearGrid();
             return;
         };
 
